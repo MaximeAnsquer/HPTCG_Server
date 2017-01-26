@@ -1,7 +1,7 @@
-import hptcg.Card;
 import hptcg.Player;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -20,8 +20,16 @@ public class Main {
   static ObjectInputStream objectInputStreamPlayer1;
   static ObjectInputStream objectInputStreamPlayer2;
   static ObjectOutputStream objectOutputStreamPlayer2;
+  static int port;
 
   public static void main(String[] args) {
+
+    if(System.getenv("PORT") == null) {
+      port = 2017;
+    } else {
+      port = Integer.parseInt(System.getenv("PORT"));
+    }
+    System.out.println("Port: " + port);
 
     createServerSocket();
 
@@ -92,7 +100,7 @@ public class Main {
 
   private static void createServerSocket() {
     try {
-      serverSocket = new ServerSocket(2017);
+      serverSocket = new ServerSocket(port);
     } catch (IOException e) {
       e.printStackTrace();
     }
